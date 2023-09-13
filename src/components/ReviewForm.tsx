@@ -19,15 +19,6 @@ const ReviewForm = ({
   reviewsSubmitted,
   setReviewsSubmitted,
 }: ReviewFormProps) => {
-  // const formik = useFormik({
-  //   initialValues: {
-  //     review: '',
-  //   },
-  //   onSubmit: (values) => {
-  //     handleSubmit(movie, values)
-  //   },
-  // })
-
   const Schema = Yup.object().shape({
     review: Yup.string()
       .max(100, 'Reviews should be 100 characters or less')
@@ -38,7 +29,7 @@ const ReviewForm = ({
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title: movie.title, body: values }),
+      body: JSON.stringify({ message: values.review }),
     }
     const submitRes = await fetch(REVIEW_API_URL, requestOptions)
     const submitJson = await submitRes.json()

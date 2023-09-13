@@ -32,7 +32,6 @@ export const App = () => {
       {!movies.length || !movieCompanies.length ? (
         <div className="flex h-screen justify-center items-center">
           No movies loaded yet
-          {/* TODO: Add loading spinner? */}
         </div>
       ) : null}
       {movies.length && movieCompanies.length && (
