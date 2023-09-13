@@ -72,13 +72,13 @@ const MoviesTable = ({
       </div>
 
       <div className="space-y-2">
-        {sortedMovies.map((movie) => {
+        {sortedMovies.map((movie, i) => {
           const hasReview = reviewsSubmitted.some(
             (review) => review.id === movie.id
           )
 
           return (
-            <Disclosure>
+            <Disclosure key={`movie${i}`}>
               {({ open }) => (
                 <>
                   <Disclosure.Button

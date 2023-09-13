@@ -13,14 +13,20 @@ export const App = () => {
   const [reviewsSubmitted, setReviewsSubmitted] = useState<Review[]>([])
   const [movies, setMovies] = useState<Movie[]>([])
   const [movieCompanies, setMovieCompanies] = useState<MovieCompany[]>([])
+  const [dataLoaded, setDataLoaded] = useState<boolean>(false)
 
   const fetchData = async () => {
-    const moviesRes = await fetch(MOVIES_API_URL)
-    const moviesJson = await moviesRes.json()
-    setMovies(moviesJson)
-    const movieCompaniesRes = await fetch(MOVIE_COMPANIES_API_URL)
-    const movieCompaniesJson = await movieCompaniesRes.json()
-    setMovieCompanies(movieCompaniesJson)
+    try {
+      const moviesRes = await fetch(MOVIES_API_URL)
+      const moviesJson = await moviesRes.json()
+      setMovies(moviesJson)
+      const movieCompaniesRes = await fetch(MOVIE_COMPANIES_API_URL)
+      const movieCompaniesJson = await movieCompaniesRes.json()
+      setMovieCompanies(movieCompaniesJson)
+      setDataLoaded(true)
+    } catch {
+      console.log('Error in fetching data')
+    }
   }
 
   useEffect(() => {
@@ -29,12 +35,7 @@ export const App = () => {
 
   return (
     <div className="p-8">
-      {!movies.length || !movieCompanies.length ? (
-        <div className="flex h-screen justify-center items-center">
-          No movies loaded yet
-        </div>
-      ) : null}
-      {movies.length && movieCompanies.length && (
+      {dataLoaded ? (
         <div className="space-y-8">
           <div className="flex justify-between items-center">
             <div>
@@ -49,6 +50,10 @@ export const App = () => {
             setReviewsSubmitted={setReviewsSubmitted}
             movies={movies}
           />
+        </div>
+      ) : (
+        <div className="flex h-screen justify-center items-center">
+          No movies loaded yet
         </div>
       )}
     </div>
